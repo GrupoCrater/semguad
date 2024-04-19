@@ -11,14 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personal', function(Blueprint $table){
+        Schema::create('boletoscarrera', function(Blueprint $table){
             $table->id();
+            $table->string('folio')->unique();
             $table->string('nombre');
-            $table->string('apellido_parterno');
+            $table->string('apellido_paterno');
             $table->string('apellido_materno');
-            $table->date('fecha_nacimiento');
+            $table->integer('edad')->unsigned();
+            $table->string('sexo');
+            $table->string('estado');
+            $table->string('ciudad');
             $table->string('telefono');
-            $table->string('domicilio');
+            $table->string('correo');
+            $table->string('club');
+            $table->string('talla');
+            $table->string('prueba');
             $table->timestamps();   
         });
     }
