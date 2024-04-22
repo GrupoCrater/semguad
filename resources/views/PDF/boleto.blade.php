@@ -19,33 +19,18 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="pag-1">
-                    <div style="display:flex; justify-content:center;">
-                        {{-- <img src="https://carrera.semguad.org.mx/includes/assets/img/seminario.png" alt="Logo Seminario Mayor"> --}}
-                        {{-- <img src="{{asset('imagenes/boletoPDF/seminario.png')}}"> --}}
-                        {{-- <img src="{{public_path('app/public/seminario.png')}}">--}}
-                        {{-- <img src="{{storage_path('seminario.png')}}">
-                        <img src="{{storage_path('app/public/seminario.png')}}">
-                        <img src="{{public_path('app/public/seminario.png')}}"> --}}
-                        {{-- <img src="{{ url('seminario.png') }}">
-                        <img src="{{asset('seminario.png')}}">
-                        <img src="{{public_path('seminario.png')}}"> --}}
-                        {{-- <img src="{{ url('./imagenes/boletoPDF/seminario.png') }}"> --}}
-                        {{-- <img src="imagenes/boletoPDF/seminario.png"> --}}
-                        {{-- <img src="{{public_path('seminario.png')}}"> --}}
-                        {{-- <img src="../public/seminario.png"> --}}
-                        <img src="data:image/png;base64,{{ $logoBase64 }}">
-
-
+    <div class="">
+        <div class="">
+            <div class="">
+                <div class="pag-1" style="height: 50%">
+                    <div style="">                        
+                        <img src="data:image/png;base64,{{ $logoBase64 }}" style="margin: 0 42%; width:100px; display:block;">
 
                         <h1 style="text-align:center; font-size:16px; margin-bottom:0; font-weight:bold;">BOLETO PARA LA
                             VI CARRERA DEL SEMINARIO</h1>
                         <h2 style="text-align:center; font-size:10px; margin-top:0;">Seminario Diocesano de Guadalajara
                         </h2>
-                        <h3 style="text-align:center; font-size:14px; font-weight:bold; margin-top:10;">Estimado(a)
+                        <h3 style="text-align:center; font-size:14px; font-weight:bold; margin-top:30;">Estimado(a)
                             {{ $boleto['nombre'] }} {{ $boleto['apellido_paterno'] }}
                             {{ $boleto['apellido_materno'] }}</h3>
                     </div>
@@ -84,7 +69,7 @@
                         <p style="font-weight:bold; text-align:justify;">Te recordamos, además, que el día de la carrera
                             es el Domingo 09 de Junio de 2024</p>
                     </div>
-                    <div>
+                    <div style="margin-top: 40px">
                         <p style="font-weight:bold; text-align:center; font-size:17px;">VI CARRERA DEL SEMINARIO DE
                             GUADALAJARA</p>
                         <p style="font-weight:bold; text-align:center; font-size:13px; margin-bottom:0;">Corre y anuncia
@@ -95,10 +80,8 @@
                     </div>
                 </div>
                 <div class="pag-2">
-                    <div style="display:flex; justify-content:center; align-items:center">
-                        {{-- <img src="https://carrera.semguad.org.mx/includes/php/control/reportes/carta.jpg" alt="carta"> --}}
-                        <img src="{{ asset('imagenes/boletoPDF/carta.jpg') }}">
-
+                    <div style="margin-top:50px;">
+                        <img src="data:image/png;base64,{{ $cartaBase64 }}" style="width:100%">
                     </div>
                 </div>
             </div>
@@ -107,10 +90,3 @@
 </body>
 
 </html>
-
-<script>
-    // Redirigir a la página de inicio después de 2 segundos
-    setTimeout(function() {
-        window.location.href = "{{ route('boletos.index') }}";
-    }, 2000);
-</script>

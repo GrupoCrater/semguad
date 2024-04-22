@@ -29,7 +29,9 @@ class DownloadPDF
         $boleto = $event->boleto;
         $precio = $event->precio; //Obtener el precio del evento
 
+        //Convertimos imagenes a base64
         $logoBase64 = base64_encode(file_get_contents(public_path('imagenes/boletoPDF/seminario.png')));
+        $cartaBase64 = base64_encode(file_get_contents(public_path('imagenes/boletoPDF/carta2.jpg')));
 
         //Configurar opciones para Dompdf
         $options = new Options();
@@ -39,7 +41,7 @@ class DownloadPDF
         $dompdf = new Dompdf($options);
 
         //Renderizar la vista a HTML
-        $html = view('pdf.boleto', ['boleto' => $boleto, 'precio' => $precio, 'logoBase64'=> $logoBase64])->render();
+        $html = view('pdf.boleto', ['boleto' => $boleto, 'precio' => $precio, 'logoBase64'=> $logoBase64, 'cartaBase64'=>$cartaBase64])->render();
 
         //cargar HTML en Dompdf
         $dompdf->loadHtml($html);

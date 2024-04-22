@@ -38,13 +38,10 @@ class BoletosCarreraController extends Controller
         //Generar la URL del PDF para su descarga
         $pdfPath = 'public/pdfs/' . $filename;
         $pdfUrl = Storage::url($pdfPath);
+
+        $request->session()->put('pdfUrl', $pdfUrl);
         
-        //Generar la respuesta de descargar del PDF
-        return response()->streamDownload(function() use ($pdfPath){
-            echo Storage::get($pdfPath);
-        }, $filename, [
-            'Content-Type' => 'application/pdf',
-        ])->setStatusCode(200);
+        return redirect()->route('boletos.index')->with('store', $pdfUrl);
     }
 
 
