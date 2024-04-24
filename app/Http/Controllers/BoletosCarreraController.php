@@ -18,7 +18,9 @@ class BoletosCarreraController extends Controller
         $boletos = Boletos::all();
 
         return view('boletos.index', compact('boletos'));
-    } 
+
+       
+    }
 
 
     public function store(BoletosRequest $request)
@@ -47,17 +49,17 @@ class BoletosCarreraController extends Controller
 
     public function show(string $id)
     {
-        $boletos = Boletos::find($id);
+        $boleto = Boletos::find($id);
 
-        return view('boletos.show', compact('boletos'));
+        return view('boletos.show', compact('boleto'));
     }
 
     public function update(BoletosRequest $request, string $id)
     {        
-        $boletos = Boletos::find($id);
-        $boletos->update($request->all());
+        $boleto = Boletos::find($id);
+        $boleto->update($request->all());
 
-        return redirect()->route('boletos.index')->with('update', 'Registro actualizado con exito');
+        return redirect()->route('boletos.show',['id' => $id])->with('update', 'Registro actualizado con exito');
     }
 
     public function destroy(string $id)
@@ -65,7 +67,7 @@ class BoletosCarreraController extends Controller
         $boletos = Boletos::find($id);
         $boletos->delete();
 
-        return redirect()->route('boletos.index')->with('destroy', 'Registro eliminado con exito');
+        return redirect()->route('dashboard')->with('destroy', 'Registro eliminado con exito');
     }
 
     public function edit($id)

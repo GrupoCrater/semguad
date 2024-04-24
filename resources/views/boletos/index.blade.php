@@ -1,84 +1,76 @@
-@extends('layouts.principal')
-
-@section('title', 'Todos los registros')
-
-@section('contenido-principal')
+<x-app-layout>
     <style>
-        .dt-search input {
-            width: 300px !important;
-            /* Cambia el valor según tu preferencia */
+        td{
+            height: 80px;
         }
     </style>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="container my-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-end">
+                                <a class="btn btn-sm btn-success" href={{ route('boletos.create') }}>Nuevo Registro</a>
 
-    <div class="container my-5">
-        <div class="row">
-            <div class="col-12">
-                <table id="tabla-boletos" class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            {{-- <th scope="col">ID</th> --}}
-                            <th scope="col">Folio</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido Paterno</th>
-                            <th scope="col">Apellido Materno</th>
-                            <th scope="col">Edad</th>
-                            {{-- <th scope="col">Sexo</th> --}}
-                            {{-- <th scope="col">Telefono</th> --}}
-                            {{-- <th scope="col">Correo</th> --}}
-                            <th scope="col">Ciudad</th>
-                            {{-- <th scope="col">Estado</th> --}}
-                            <th scope="col">Club</th>
-                            <th scope="col">Talla</th>
-                            <th scope="col">Prueba</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($boletos as $boleto)
-                            <tr>
-                                {{-- <td scope="row">{{ $boleto->id }}</td> //este --}}
-                                <th scope="row">{{ $boleto->folio }}</th>
-                                <td>{{ $boleto->nombre }}</td>
-                                <td>{{ $boleto->apellido_paterno }}</td>
-                                <td>{{ $boleto->apellido_materno }}</td>
-                                <td>{{ $boleto->edad }}</td>
-                                {{-- <td>{{ $boleto->sexo }}</td> //este --}}
-                                {{-- <td>{{ $boleto->telefono }}</td> //este --}}
-                                {{-- <td>{{ $boleto->correo }}</td> //este --}}
-                                <td>{{ $boleto->ciudad }}</td>
-                                {{-- <td>{{ $boleto->estado }}</td> //este --}}
-                                <td>{{ $boleto->club }}</td>
-                                <td>{{ $boleto->talla }}</td>
-                                <td>{{ $boleto->prueba }}</td>
-                                <td>
-                                    <a href="{{ route('boletos.edit', $boleto->id) }}"
-                                        class="btn btn-primary btn-sm">Ver</a>
-                                    <form id="eliminar" action="{{ route('boletos.destroy', $boleto->id) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                {{-- <div class="card-footer">
-                        <div class="row">
-                            <div class="col-sm">
-                                <a href="{{ route('boletos.edit', $boleto->id) }}" class="btn btn-primary btn-sm">Edit</a>
                             </div>
-                            <div class="col-sm">
-                                <form id="eliminar" action="{{ route('boletos.destroy', $boleto->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </div>
+                            <table id="tabla-boletos" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        {{-- <th scope="col">ID</th> --}}
+                                        <th scope="col">Folio</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido Paterno</th>
+                                        <th scope="col">Apellido Materno</th>
+                                        <th scope="col">Edad</th>
+                                        {{-- <th scope="col">Sexo</th> --}}
+                                        {{-- <th scope="col">Telefono</th> --}}
+                                        {{-- <th scope="col">Correo</th> --}}
+                                        <th scope="col">Ciudad</th>
+                                        {{-- <th scope="col">Estado</th> --}}
+                                        <th scope="col">Club</th>
+                                        <th scope="col">Talla</th>
+                                        <th scope="col">Prueba</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($boletos as $boleto)
+                                        <tr>
+                                            {{-- <td scope="row">{{ $boleto->id }}</td> //este --}}
+                                            <th scope="row">{{ $boleto->folio }}</th>
+                                            <td>{{ $boleto->nombre }}</td>
+                                            <td>{{ $boleto->apellido_paterno }}</td>
+                                            <td>{{ $boleto->apellido_materno }}</td>
+                                            <td>{{ $boleto->edad }}</td>
+                                            {{-- <td>{{ $boleto->sexo }}</td> //este --}}
+                                            {{-- <td>{{ $boleto->telefono }}</td> //este --}}
+                                            {{-- <td>{{ $boleto->correo }}</td> //este --}}
+                                            <td>{{ $boleto->ciudad }}</td>
+                                            {{-- <td>{{ $boleto->estado }}</td> //este --}}
+                                            <td>{{ $boleto->club }}</td>
+                                            <td>{{ $boleto->talla }}</td>
+                                            <td>{{ $boleto->prueba }}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center" style="height:100%">
+                                                    <a href="{{ route('boletos.show', $boleto->id) }}"
+                                                        class="btn btn-primary btn-sm">Ver</a>
+                                                    <form id="eliminar"
+                                                        action="{{ route('boletos.destroy', $boleto->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                    </div> --}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -127,16 +119,6 @@
                 timer: 2000
             });
         </script>
-    @elseif (Session::has('update'))
-        <script>
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Registro actualizado con exito",
-                showConfirmButton: false,
-                timer: 2000
-            });
-        </script>
     @endif
 
     {{-- Inicializamos Data Tables --}}
@@ -148,9 +130,9 @@
             // Inicializa DataTables en la tabla
             var dataTable = new DataTable(table, {
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/2.0.5/i18n/es-MX.json'
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.5/i18n/es-MX.json'
                 }
             });
         });
     </script>
-@endsection
+</x-app-layout>
