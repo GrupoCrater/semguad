@@ -53,8 +53,10 @@
                                             <td>{{ $boleto->prueba }}</td>
                                             <td>
                                                 <div class="d-flex align-items-center" style="height:100%">
-                                                    <a href="{{ route('boletos.show', $boleto->id) }}"
-                                                        class="btn btn-primary btn-sm">Ver</a>
+                                                    <a href="{{ route('boletos.edit', $boleto->id) }}"
+                                                        class="btn btn-primary btn-sm me-1">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </a>
                                                     <form id="eliminar"
                                                         action="{{ route('boletos.destroy', $boleto->id) }}"
                                                         method="post">
