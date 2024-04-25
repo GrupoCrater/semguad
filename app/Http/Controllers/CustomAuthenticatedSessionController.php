@@ -26,4 +26,10 @@ class CustomAuthenticatedSessionController extends AuthenticatedSessionControlle
 
         return redirect('/login'); // Aquí es donde se redirige después de cerrar sesión
     }
+
+     // Método para redireccionar después del inicio de sesión
+    //  protected function authenticated(Request $request, $user)
+    //  {
+    //      return redirect()->intended('/'); // Redirige al usuario a la ruta raíz (localhost)
+    //  }
 }

@@ -67,7 +67,7 @@ class BoletosCarreraController extends Controller
         $boletos = Boletos::find($id);
         $boletos->delete();
 
-        return redirect()->route('dashboard')->with('destroy', 'Registro eliminado con exito');
+        return redirect()->route('boletos.index')->with('destroy', 'Registro eliminado con exito');
     }
 
     public function edit($id)

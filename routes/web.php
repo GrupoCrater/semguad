@@ -12,11 +12,7 @@ Route::middleware([
     'verified',
 ])->group(function () {  
     // Retorna la vista de inicio con todos los resultados
-    Route::get('/', BoletosCarreraController::class . '@index')->name('dashboard');
-
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    //     })->name('dashboard');
+    Route::get('/', BoletosCarreraController::class . '@index')->name('boletos.index');
 
     // Retorna el formulario para agregar un nuevo registro
     Route::get('/boletos/create', BoletosCarreraController::class . '@create')->name('boletos.create');
