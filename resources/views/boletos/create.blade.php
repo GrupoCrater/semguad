@@ -5,7 +5,15 @@
                 <div class="container h-100 my-5">
                     <div class="row h-100 justify-content-center align-items-center">
                         <div class="col-lg-12">
-                            <h3 class="text-center mb-5">Nuevo Registro</h3>
+                            <h3 class="text-center mb-0">Nuevo Registro</h3>
+                            <div class="mb-3">
+                                <a href="{{ route('boletos.index') }}"
+                                    class="btn btn-success btn-sm fs-6"
+                                    title="Regresar al Panel">
+                                    <i class="fa-solid fa-arrow-left me-1"></i>
+                                    Regresar
+                                </a>
+                            </div>
                             <form action="{{ route('boletos.store') }}" method="post">
                                 @csrf
                                 <div class="row">
@@ -237,7 +245,11 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-4">
-                                    <button type="submit" class="btn btn-primary">Agregar Registro</button>
+                                    <button type="submit" class="btn btn-primary fs-6"
+                                        title="Guardar Información">
+                                        <i class="fa-solid fa-floppy-disk me-1"></i>
+                                        Guardar
+                                    </button>
                                 </div>
                             </form>
                         </div>

@@ -45,7 +45,6 @@ class DownloadPDF
 
         //cargar HTML en Dompdf
         $dompdf->loadHtml($html);
-
         $dompdf->setPaper('A4', 'portrait');
 
         //Renderizar PDF
@@ -59,7 +58,7 @@ class DownloadPDF
         Storage::put('public/pdfs/' . $filename, $output);
 
         //Marcar que el PDF ha sido generado
-        Session::put('pdf_generated', true);
+        Session::put('pdf_generated', $filename);
         
     }
 }

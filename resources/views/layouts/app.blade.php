@@ -14,8 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     {{-- Fontawesome --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-Qe4XbGeYrpKehz2k++5kD8Wj8CXRiHc1G2qQ6pHlQ4s7CvqhTK5cj2Qu5tbbCZxwN9dmR/rlJeg32uAinVMsPg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script src="https://kit.fontawesome.com/0afe05777e.js" crossorigin="anonymous"></script>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -16,34 +16,62 @@ class BoletosCarreraController extends Controller
     public function index()
     {
         $boletos = Boletos::all();
+        // $boletos = Boletos::orderby('folio', 'desc')->get();
 
         return view('boletos.index', compact('boletos'));
-
-       
     }
 
 
     public function store(BoletosRequest $request)
-    {          
+    {
         $boleto = Boletos::create($request->all());
 
+        // START EVENTO
         //Obener la fecha de registro del folio
         $fechaRegistro = Carbon::createFromFormat('dmY', substr($boleto->folio, 0, 8));
 
         //Determinar el precio
         $precio = $fechaRegistro->isBefore('2024-04-01') ? '$350' : '$400';
-       
+
         //Disparar evento una vez que se ha generado el PDF
-        event(new PDFGenerated($boleto, $precio)); 
-        $filename = 'boleto_' . $boleto->folio .'.pdf';
+        event(new PDFGenerated($boleto, $precio));
+        $filename = 'boleto_' . $boleto->folio . '.pdf';
 
         //Generar la URL del PDF para su descarga
         $pdfPath = 'public/pdfs/' . $filename;
         $pdfUrl = Storage::url($pdfPath);
 
         $request->session()->put('pdfUrl', $pdfUrl);
-        
+        // END EVENTO
+
         return redirect()->route('boletos.index')->with('store', $pdfUrl);
+    }
+
+    public function descargarPDF($id, $folio)
+    {
+        $rutaPDF = public_path('storage/pdfs/boleto_' . $folio . '.pdf');
+
+        if (file_exists($rutaPDF)) {
+
+            header('Location:' . asset('storage/pdfs/boleto_' . $folio . '.pdf'), true, 302);
+            exit;
+
+        } else { //Si el archivo no existe lo genera y lo descarga        
+
+            $boleto = Boletos::find($id);
+
+            //Obener la fecha de registro del folio
+            $fechaRegistro = Carbon::createFromFormat('dmY', substr($boleto->folio, 0, 8));
+
+            //Determinar el precio
+            $precio = $fechaRegistro->isBefore('2024-04-01') ? '$350' : '$400';
+
+            //Disparar evento una vez que se ha generado el PDF
+            event(new PDFGenerated($boleto, $precio));
+
+            header('Location:' . asset('storage/pdfs/boleto_' . $folio . '.pdf'), true, 302);
+            exit;            
+        }
     }
 
 
@@ -55,11 +83,11 @@ class BoletosCarreraController extends Controller
     }
 
     public function update(BoletosRequest $request, string $id)
-    {        
+    {
         $boleto = Boletos::find($id);
         $boleto->update($request->all());
 
-        return redirect()->route('boletos.show',['id' => $id])->with('update', 'Registro actualizado con exito');
+        return redirect()->route('boletos.index')->with('update', 'Registro actualizado con exito');
     }
 
     public function destroy(string $id)

@@ -37,15 +37,5 @@
             </div>
         </div>
     </div>
-    @if (Session::has('update'))
-        <script>
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Registro actualizado con exito",
-                showConfirmButton: false,
-                timer: 2000
-            });
-        </script>
-    @endif
+    
 </x-app-layout>

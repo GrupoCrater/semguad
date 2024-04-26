@@ -14,6 +14,9 @@ Route::middleware([
     // Retorna la vista de inicio con todos los resultados
     Route::get('/', BoletosCarreraController::class . '@index')->name('boletos.index');
 
+    //Ruta para descargarpdf
+    Route::get('/descargar-pdf/{id}/{folio}', [BoletosCarreraController::class, 'descargarPDF'])->name('descargar.pdf');
+
     // Retorna el formulario para agregar un nuevo registro
     Route::get('/boletos/create', BoletosCarreraController::class . '@create')->name('boletos.create');
 

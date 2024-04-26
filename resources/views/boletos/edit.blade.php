@@ -5,7 +5,15 @@
                 <div class="container h-100 my-5">
                     <div class="row h-100 justify-content-center align-items-center">
                         <div class="col-lg-12">
-                            <h3 class="text-center mb-5">Regristro Detallado</h3>
+                            <h3 class="text-center mb-0">Regristro Detallado</h3>
+                            <div class="mb-3">
+                                <a href="{{ route('boletos.index') }}"
+                                    class="btn btn-success btn-sm fs-6"
+                                    title="Regresar al Panel">
+                                    <i class="fa-solid fa-arrow-left me-1"></i>
+                                    Regresar
+                                </a>
+                            </div>
                             <form action="{{ route('boletos.update', $boleto->id) }}" method="post">
                                 @csrf
                                 @method('PUT')
@@ -254,7 +262,12 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn mt-3 btn-primary">Actualizar</button>
+                                    <button type="submit" 
+                                        class="btn mt-3 btn-primary fs-6"
+                                        title="Actualizar informacón">
+                                        <i class="fa-solid fa-floppy-disk me-1"></i>
+                                        Actualizar
+                                    </button>
                                 </div>
                             </form>
                         </div>
