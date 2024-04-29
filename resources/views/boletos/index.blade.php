@@ -7,7 +7,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="container my-5">
+                <div class="container mt-4 mb-5">
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex justify-content-end mb-3">
@@ -64,19 +64,21 @@
                                                         style="display:block; width:35px;" title="Ver">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('descargar.pdf', ['id' => $boleto->id, 'folio' => $boleto->folio]) }}" class="btn btn-secondary btn-sm me-1"
-                                                        onclick="event.stopPropagation();"
-                                                        style="display:block; width:35px;" title="Descargar PDF" target="_blank">
+                                                    <a href="#"
+                                                        class="btn btn-secondary btn-sm me-1"
+                                                        onclick="event.stopPropagation(); openPDFModal('{{ route('descargar.pdf', ['id' => $boleto->id, 'folio' => $boleto->folio]) }}')"
+                                                        style="display:block; width:35px;" title="Ver PDF">
                                                         <i class="fa-solid fa-file-pdf"></i>
                                                     </a>
-                                                    <form onclick="event.stopPropagation();" id="eliminar"
+                                                    <form onclick="event.stopPropagation();"
+                                                        id="eliminar-{{ $boleto->id }}"
                                                         action="{{ route('boletos.destroy', $boleto->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-danger btn-sm"
-                                                            onclick="confirmarEliminacion()" style="width:35px;"
-                                                            title="Eliminar">
+                                                            onclick="confirmarEliminacion('{{ $boleto->id }}')"
+                                                            style="width:35px;" title="Eliminar">
                                                             <i class="fa-solid fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -93,9 +95,13 @@
         </div>
     </div>
 
+    {{-- Modal Nuevo Registro--}}
+        
+    {{-- End Modal Nuevo Registro --}}
+
     {{-- ALERTAS --}}
     <script>
-        function confirmarEliminacion() {
+        function confirmarEliminacion(id) {
             Swal.fire({
                 title: "¿Estás seguro?",
                 text: "Esta acción no podrá revertirse",
@@ -107,7 +113,7 @@
                 cancelButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('eliminar').submit();
+                    document.getElementById('eliminar-' + id).submit();
                 }
             });
         };
@@ -149,6 +155,7 @@
             });
         </script>
     @endif
+    {{-- END Alertas --}}
 
     {{-- Inicializamos Data Tables --}}
     <script>
@@ -167,4 +174,5 @@
             });
         });
     </script>
+    {{-- END Datatable --}}
 </x-app-layout>

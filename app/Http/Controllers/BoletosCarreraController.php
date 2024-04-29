@@ -15,8 +15,8 @@ class BoletosCarreraController extends Controller
 {
     public function index()
     {
-        $boletos = Boletos::all();
-        // $boletos = Boletos::orderby('folio', 'desc')->get();
+        // $boletos = Boletos::all();
+        $boletos = Boletos::orderby('folio', 'desc')->get();
 
         return view('boletos.index', compact('boletos'));
     }
@@ -28,7 +28,7 @@ class BoletosCarreraController extends Controller
 
         // START EVENTO
         //Obener la fecha de registro del folio
-        $fechaRegistro = Carbon::createFromFormat('dmY', substr($boleto->folio, 0, 8));
+        $fechaRegistro = Carbon::createFromFormat('dmy', substr($boleto->folio, 0, 6));
 
         //Determinar el precio
         $precio = $fechaRegistro->isBefore('2024-04-01') ? '$350' : '$400';
@@ -55,13 +55,15 @@ class BoletosCarreraController extends Controller
 
             header('Location:' . asset('storage/pdfs/boleto_' . $folio . '.pdf'), true, 302);
             exit;
+            // return response()->file($rutaPDF);
+            // return response()->download($rutaPDF);
 
         } else { //Si el archivo no existe lo genera y lo descarga        
 
             $boleto = Boletos::find($id);
 
             //Obener la fecha de registro del folio
-            $fechaRegistro = Carbon::createFromFormat('dmY', substr($boleto->folio, 0, 8));
+            $fechaRegistro = Carbon::createFromFormat('dmy', substr($boleto->folio, 0, 6));
 
             //Determinar el precio
             $precio = $fechaRegistro->isBefore('2024-04-01') ? '$350' : '$400';
@@ -109,17 +111,17 @@ class BoletosCarreraController extends Controller
     public function create()
     {
         //Paso 1. Generamos la fecha del folio
-        $fechaFolio = date('dmY');
+        $fechaFolio = date('dmy');
 
         //Paso 2. Consultamos el ultimo folio en la base de datos
         $ultimoBoleto = Boletos::latest()->first();
 
         //Paso 3. Incrementamos el ultimo digito del folio
         if ($ultimoBoleto) {
-            $ultimoNumero = intval(substr($ultimoBoleto->folio, -3));
-            $nuevoNumero = str_pad($ultimoNumero + 1, 3, '0', STR_PAD_LEFT);
+            $ultimoNumero = intval(substr($ultimoBoleto->folio, -4));
+            $nuevoNumero = str_pad($ultimoNumero + 1, 4, '0', STR_PAD_LEFT);
         } else {
-            $nuevoNumero = '001';
+            $nuevoNumero = '0001';
         }
 
         //Paso 4: Creamos el nuevo folio

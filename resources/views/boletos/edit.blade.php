@@ -261,9 +261,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-end  mt-3">
+                                    <a href="#" class="btn btn-secondary btn-sm me-2 d-flex align-items-center fs-6" 
+                                        title="Ver PDF" 
+                                        onclick="openPDFModal('{{ route('descargar.pdf', ['id' => $boleto->id, 'folio' => $boleto->folio]) }}')">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                        Ver
+                                    </a>
                                     <button type="submit" 
-                                        class="btn mt-3 btn-primary fs-6"
+                                        class="btn btn-primary fs-6"
                                         title="Actualizar informacón">
                                         <i class="fa-solid fa-floppy-disk me-1"></i>
                                         Actualizar
