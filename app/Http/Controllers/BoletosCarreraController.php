@@ -18,7 +18,24 @@ class BoletosCarreraController extends Controller
         // $boletos = Boletos::all();
         $boletos = Boletos::orderby('folio', 'desc')->get();
 
-        return view('boletos.index', compact('boletos'));
+        //Paso 1. Generamos la fecha del folio
+        $fechaFolio = date('dmy');
+
+        //Paso 2. Consultamos el ultimo folio en la base de datos
+        $ultimoBoleto = Boletos::latest()->first();
+
+        //Paso 3. Incrementamos el ultimo digito del folio
+        if ($ultimoBoleto) {
+            $ultimoNumero = intval(substr($ultimoBoleto->folio, -4));
+            $nuevoNumero = str_pad($ultimoNumero + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $nuevoNumero = '0001';
+        }
+
+        //Paso 4: Creamos el nuevo folio
+        $nuevoFolio = $fechaFolio . '-' . $nuevoNumero;
+
+        return view('boletos.index', compact('boletos', 'nuevoFolio'));
     }
 
 

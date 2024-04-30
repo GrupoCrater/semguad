@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BoletosCarreraController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SeminaristasController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Jetstream\Http\Controllers\RegisteredUserController;
@@ -12,7 +14,10 @@ Route::middleware([
     'verified',
 ])->group(function () {  
     // Retorna la vista de inicio con todos los resultados
-    Route::get('/', BoletosCarreraController::class . '@index')->name('boletos.index');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // RUTAS BOLETOS
+    Route::get('/boletos', BoletosCarreraController::class . '@index')->name('boletos.index');
 
     //Ruta para descargarpdf
     Route::get('/descargar-pdf/{id}/{folio}', [BoletosCarreraController::class, 'descargarPDF'])->name('descargar.pdf');
@@ -34,6 +39,11 @@ Route::middleware([
 
     // Elimina un registro
     Route::delete('/boletos/{id}', BoletosCarreraController::class . '@destroy')->name('boletos.destroy');
+    // END RUTAS BOLETOS
+
+    // RUTAS SEMINARISTAS
+    Route::get('/seminaristas', SeminaristasController::class . '@index')->name('seminaristas.index');
+    // END RUTAS SEMINARISTAS
 });
 
 Route::post('/logout', [CustomAuthenticatedSessionController::class,'logout'])->name('logout');

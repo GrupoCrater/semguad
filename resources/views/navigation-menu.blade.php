@@ -3,9 +3,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
+
+                <!-- LOGO -->
                 <div class="shrink-0 flex items-center" style="width:60px;">
-                    <a href="{{ route('boletos.index') }}">
+                    <a href="{{ route('dashboard') }}">
                         <img src="{{ asset('imagenes/boletoPDF/seminario.png') }}" alt="">
                     </a>
                 </div>
@@ -13,8 +14,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
+                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Panel') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('seminaristas.index') }}" :active="request()->routeIs('seminaristas.index')">
+                        {{ __('Seminaristas') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
+                        {{ __('Boletos') }}
                     </x-nav-link>
                 </div>
                 <!-- End Navigation Links -->
@@ -153,9 +160,16 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
+            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Panel') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('seminaristas.index') }}" :active="request()->routeIs('seminaristas.index')">
+                {{ __('Seminaristas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
+                {{ __('Boletos') }}
+            </x-responsive-nav-link>
+            
         </div>
 
         <!-- Responsive Settings Options -->

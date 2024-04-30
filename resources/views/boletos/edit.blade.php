@@ -7,7 +7,7 @@
                         <div class="col-lg-12">
                             <h3 class="text-center mb-0">Regristro Detallado</h3>
                             <div class="mb-3">
-                                <a href="{{ route('boletos.index') }}"
+                                <a href="{{ URL::previous() }}"
                                     class="btn btn-success btn-sm fs-6"
                                     title="Regresar al Panel">
                                     <i class="fa-solid fa-arrow-left me-1"></i>
