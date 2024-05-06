@@ -18,6 +18,19 @@
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             </div>
+            <div class="mt-4">
+                <label class="span-form-input" for="rol">Rol</label>
+                <select class="form-control3 shadow-none @error('rol') is-invalid @enderror"
+                                            name="rol" id="rol">
+                                            <option value="">- Seleccione un rol -</option>
+                                            <option value="master"
+                                                {{ old('rol') == 'master' ? 'selected' : '' }}>
+                                                Master</option>
+                                            <option value="administrador"
+                                                {{ old('rol') == 'administador' ? 'selected' : '' }}>
+                                                Administrador</option>
+                                        </select>
+            </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />

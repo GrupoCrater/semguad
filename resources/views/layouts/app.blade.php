@@ -51,12 +51,17 @@
         <!-- CONTENIDO PRINCIPAL -->
         <main>
             {{-- @yield('contenido-principal') --}}
+            @if (session('alert'))
+                <div id="alert-message" class="alert alert-warning mt-3" style="text-align: center; font-size: 24px;">
+                    {{ session('alert') }}
+                </div>
+            @endif
             {{ $slot }}
         </main>
     </div>
 
     {{-- Footer --}}
-    <footer class="container-fluid fondo_gris3 col-12 fs-16  pt-40">        
+    <footer class="container-fluid fondo_gris3 col-12 fs-16  pt-40">
         @include('footer')
     </footer>
 
@@ -92,6 +97,22 @@
         }
     </script>
     {{-- END Modal mostrar PDF --}}
+
+    <script>
+        // Espera a que el documento esté completamente cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Selecciona el elemento del mensaje
+            var alertMessage = document.getElementById('alert-message');
+    
+            // Si el elemento está presente
+            if (alertMessage) {
+                // Después de 5000 milisegundos (5 segundos), oculta el mensaje
+                setTimeout(function() {
+                    alertMessage.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

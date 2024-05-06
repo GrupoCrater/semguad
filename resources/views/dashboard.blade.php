@@ -6,11 +6,11 @@
                 <div class="container">
                     <div class="row mt-5">
                         <div class="col-lg-3">
-                            <a class="individual container1" href="{{route('seminaristas.index')}}">
+                            <a class="individual container1" href="{{route('administradores.index')}}">
                                 <div class="iconContainer icon1">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                 </div>
-                                Seminaristas
+                                Administradores
                             </a>
                         </div>
                         <div class="col-lg-3">

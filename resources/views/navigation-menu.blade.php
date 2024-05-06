@@ -17,8 +17,8 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Panel') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('seminaristas.index') }}" :active="request()->routeIs('seminaristas.index')">
-                        {{ __('Seminaristas') }}
+                    <x-nav-link href="{{ route('administradores.index') }}" :active="request()->routeIs('administradores.index')">
+                        {{ __('Administradores') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
                         {{ __('Boletos') }}
@@ -163,8 +163,8 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Panel') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('seminaristas.index') }}" :active="request()->routeIs('seminaristas.index')">
-                {{ __('Seminaristas') }}
+            <x-responsive-nav-link href="{{ route('administradores.index') }}" :active="request()->routeIs('administradores.index')">
+                {{ __('Administradores') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
                 {{ __('Boletos') }}

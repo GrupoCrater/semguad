@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BoletosCarreraController extends Controller
 {
@@ -41,9 +42,12 @@ class BoletosCarreraController extends Controller
 
     public function store(BoletosRequest $request)
     {
-        $boleto = Boletos::create($request->all());
+        $userId= Auth::id(); //Guardamos el id de usuario en una variable
+        
+        //Creamos un nuevo registro con los datos del formulario y el ID del usuario.
+        $boleto = Boletos::create(array_merge($request->all(), ['id_user' => $userId]));
 
-        // START EVENTO
+        // START EVENTO para crear PDF
         //Obener la fecha de registro del folio
         $fechaRegistro = Carbon::createFromFormat('dmy', substr($boleto->folio, 0, 6));
 

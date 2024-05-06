@@ -12,6 +12,7 @@ class Boletos extends Model
     protected $table = 'boletoscarrera';
 
     protected $fillable = [
+        'id_user', //Este valor no se pasa por el fomulario, se asigna en el controlador, sin embargo, fue necesario agregarlo para que hiciera el registro
         'folio',
         'nombre',
         'apellido_paterno',
@@ -26,4 +27,8 @@ class Boletos extends Model
         'talla',
         'prueba',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }
