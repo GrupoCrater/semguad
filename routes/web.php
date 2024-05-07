@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\BoletosCarreraController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FechasController;
 use App\Http\Controllers\SeminaristasController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Http\Controllers\AuthenticatedSessionController;
@@ -36,7 +37,8 @@ Route::middleware([
     // Elimina un registro
     Route::delete('/boletos/{id}', BoletosCarreraController::class . '@destroy')->name('boletos.destroy');
     // END RUTAS BOLETOS
-    // END RUTAS ADMINISTRADORES
+    
+
 });
 
 // RUTAS MASTER 
@@ -47,4 +49,16 @@ Route::group(['middleware' => MasterMiddleware::class], function () {
     Route::post('/administradores', [AdministradoresController::class, 'store'])->name('administradores.store');
     Route::delete('/administradores/{id}', [AdministradoresController::class, 'destroy'])->name('administradores.destroy');
     Route::post('/administradores/update', [AdministradoresController::class, 'update'])->name('administradores.update');
+
+    // RUTAS FECHAS
+    Route::get('/fechas', [FechasController::class, 'index'])->name('fechas.index');
+    Route::get('/fechas/{id}/edit', [FechasController::class, 'edit'])->name('fechas.edit');
+    Route::delete('/fechas/{id}', [FechasController::class, 'destroy'])->name('fechas.destroy');
+    Route::get('/fechas/create', FechasController::class . '@create')->name('fechas.create');
+    Route::post('/fechas', FechasController::class . '@store')->name('fechas.store');
+    Route::put('/fechas/{id}', FechasController::class . '@update')->name('fechas.update');
+
+
+
+    // END RUTAS FECHAS
 });

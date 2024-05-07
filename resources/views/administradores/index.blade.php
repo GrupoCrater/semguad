@@ -193,8 +193,7 @@
     </div>
     {{-- End Modal Nuevo Registro --}}
 
-    {{-- Modal EDITAR --}}
-
+{{-- Modal EDITAR --}}
     <script>
         function openEditarModal(userId) {
             // console.log(userId);
@@ -320,7 +319,7 @@
             </div>
         </div>
     </div>
-    {{-- End Modal EDITAR --}}
+{{-- End Modal EDITAR --}}
 
     {{-- ALERTAS --}}
     <script>

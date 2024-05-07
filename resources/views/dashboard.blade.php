@@ -12,7 +12,7 @@
                                         <i class="fa-solid fa-graduation-cap"></i>
                                     </div>
                                     Usuarios 
-                                    <div class="numContainer numUsuairos ms-3 fs-5">{{$numUsuarios}}</div>
+                                    <div class=" ms-3 fs-5">{{$numUsuarios}}</div>
                                     
                                 </a>
                             </div>
@@ -23,7 +23,7 @@
                                     <i class="fa-solid fa-person-running"></i>
                                 </div>
                                 Boletos
-                                <div class="numContainer numBoletos ms-3 fs-5">{{$numBoletos}}</div>
+                                <div class="ms-3 fs-5">{{$numBoletos}}</div>
 
                             </a>
                         </div>

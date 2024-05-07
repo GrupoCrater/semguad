@@ -18,7 +18,13 @@
                                 </a>
                                 <div class="d-flex align-items-center">
                                     <h2 class="mb-0">Boletos registrados</h2>
+                                    <a href="{{ route('fechas.index') }}"
+                                    class="btn btn-primary btn-sm me-1"
+                                    title="Ver fechas de registro y precios de boletos">
+                                    Ver fechas y precios
+                                </a>
                                 </div>
+                                
                                 <a class="btn btn-sm btn-success fs-6" data-bs-toggle="modal"
                                     data-bs-target="#nuevoRegistroModal" title="Crear nuevo registro">
                                     <i class="fa-solid fa-plus"></i>
