@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Jetstream\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\CustomAuthenticatedSessionController;
+use App\Http\Middleware\MasterMiddleware;
+
 
 Route::middleware([
     'auth:sanctum',
@@ -34,14 +36,15 @@ Route::middleware([
     // Elimina un registro
     Route::delete('/boletos/{id}', BoletosCarreraController::class . '@destroy')->name('boletos.destroy');
     // END RUTAS BOLETOS
-
-    // RUTAS ADMINISTRADORES
-    Route::middleware(['auth', 'master'])->group(function () {
-        Route::get('/administradores', [AdministradoresController::class, 'index'])->name('administradores.index');
-        Route::get('/administradores/{id}/edit', [AdministradoresController::class, 'edit'])->name('administradores.edit');
-        Route::post('/administradores', [AdministradoresController::class, 'store'])->name('administradores.store');
-        Route::delete('/administradores/{id}', [AdministradoresController::class, 'destroy'])->name('administradores.destroy');
-        Route::post('/administradores/update', [AdministradoresController::class, 'update'])->name('administradores.update');
-    });
     // END RUTAS ADMINISTRADORES
+});
+
+// RUTAS MASTER 
+// USAMOS DIRECTAMENTE EL MIDDLEWARE MASTER QUE CREAMOS
+Route::group(['middleware' => MasterMiddleware::class], function () {
+    Route::get('/administradores', [AdministradoresController::class, 'index'])->name('administradores.index');
+    Route::get('/administradores/{id}/edit', [AdministradoresController::class, 'edit'])->name('administradores.edit');
+    Route::post('/administradores', [AdministradoresController::class, 'store'])->name('administradores.store');
+    Route::delete('/administradores/{id}', [AdministradoresController::class, 'destroy'])->name('administradores.destroy');
+    Route::post('/administradores/update', [AdministradoresController::class, 'update'])->name('administradores.update');
 });
