@@ -11,8 +11,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <a href="{{ URL::previous() }}"
-                                    class="btn btn-primary btn-sm fs-6"
+                                <a href="{{ URL::previous() }}" class="btn btn-primary btn-sm fs-6"
                                     title="Regresar al Panel">
                                     <i class="fa-solid fa-arrow-left me-1"></i>
                                     Regresar
@@ -24,7 +23,7 @@
                                     data-bs-target="#nuevoRegistroModal" title="Crear nuevo registro">
                                     <i class="fa-solid fa-plus"></i>
                                     Nuevo
-                                </a>                                
+                                </a>
                             </div>
                             <table id="tabla-boletos" class="table table-striped table-hover">
                                 <thead>
@@ -103,6 +102,14 @@
     </div>
 
     {{-- Modal Nuevo Registro --}}
+    @if ($errors->any())
+        <script>
+            $(document).ready(function() {
+                $('#nuevoRegistroModal').modal('show');
+            });
+        </script>
+    @endif
+
     <div class="modal fade" id="nuevoRegistroModal" tabindex="-1" aria-labelledby="NuevoRegistroModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -113,7 +120,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-lg-12">
-                        <form action="{{ route('boletos.store') }}" method="post">
+                        <form id="registroFormModal" action="{{ route('boletos.store') }}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="p-2">
@@ -360,7 +367,7 @@
             </div>
         </div>
     </div>
-    {{-- End Modal Nuevo Registro --}}
+
 
     {{-- ALERTAS --}}
     <script>
@@ -419,7 +426,7 @@
         </script>
     @endif
     {{-- END Alertas --}}
-    
+
 
     {{-- Inicializamos Data Tables --}}
     <script>

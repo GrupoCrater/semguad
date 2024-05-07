@@ -17,9 +17,11 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Panel') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('administradores.index') }}" :active="request()->routeIs('administradores.index')">
-                        {{ __('Administradores') }}
-                    </x-nav-link>
+                    @if (auth()->user()->rol == 'master')
+                        <x-nav-link href="{{ route('administradores.index') }}" :active="request()->routeIs('administradores.index')">
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+                    @endif
                     <x-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
                         {{ __('Boletos') }}
                     </x-nav-link>
@@ -130,7 +132,7 @@
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf                                
+                                @csrf
                                 <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     {{ __('Log Out') }}
@@ -163,13 +165,15 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Panel') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('administradores.index') }}" :active="request()->routeIs('administradores.index')">
-                {{ __('Administradores') }}
-            </x-responsive-nav-link>
+            @if (auth()->user()->rol == 'master')
+                <x-responsive-nav-link href="{{ route('administradores.index') }}" :active="request()->routeIs('administradores.index')">
+                    {{ __('Usuarios') }}
+                </x-responsive-nav-link>
+            @endif
             <x-responsive-nav-link href="{{ route('boletos.index') }}" :active="request()->routeIs('boletos.index')">
                 {{ __('Boletos') }}
             </x-responsive-nav-link>
-            
+
         </div>
 
         <!-- Responsive Settings Options -->

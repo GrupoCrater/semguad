@@ -20,10 +20,22 @@ class AdministradoresController extends Controller
         return view('administradores.index', compact('administradores'));
     }
 
-    // Tuve que quitar el AdminstradoresRequest porque no me dejaba insertar usuarios conlas validaciones aparte
+    // Tuve que quitar el AdminstradoresRequest porque no me dejaba insertar usuarios con las validaciones aparte
     public function store(Request $request)
     {
-        // INSERTAR VALIDACIONES
+        //Perzonalizamos algunos mensajes
+        $messages =[
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+        ];
+
+        // Validamos los  datos de entrada
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'rol' => 'required|string|max:255',
+            'password' => 'required|string|min:8|max:255|confirmed',
+        ], $messages);
+
         $nuevoAdministrador = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -37,29 +49,25 @@ class AdministradoresController extends Controller
     public function update(Request $request)
     {
         $usuario = User::find($request->userId);
-        Log::info($request);
 
-        // $usuario->update($request->all());
+        // Actualizamos los campos comunes
         $usuario->name = $request->input('nameedit');
         $usuario->email = $request->input('emailedit');
         $usuario->rol = $request->input('roledit');
 
-        if ($request->has('passwordedit')) {
-            Log::info('Entro al primer if');
+        // Verificamos si se proporciono una nueva contraseña
+        if ($request->filled('passwordedit')) {
             $password = $request->input('passwordedit');
             $confirmpassword = $request->input('password_confirmationedit');
+
+            // Verificar si las contraseñas coinciden
             if ($password !== $confirmpassword) {
                 // No hay productos, establece un mensaje en la sesión flash
                 session()->flash('alert', 'Las contraseñas no coinciden');
-                Log::info("Entro en la comparacion de contraseñas");
-
-                // Redirige de nuevo a la página anterior o a donde desees
                 return back();
-            } else {
-                // $usuario->password = Hash::make($request->input('password'));
-                $usuario->password = ($request->input('passwordedit'));
-
-            }
+            } else{
+                $usuario->password = Hash::make($password);
+            }          
         }
 
         $usuario->update();

@@ -90,12 +90,20 @@
     </div>
 
     {{-- Modal Nuevo Registro --}}
+    @if ($errors->any())
+        <script>
+            $(document).ready(function() {
+                $('#nuevoAdministradorModal').modal('show');
+            });
+        </script>
+    @endif
+
     <div class="modal fade" id="nuevoAdministradorModal" tabindex="-1" aria-labelledby="NuevoAdministradorModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Administrador</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Usuario</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -162,10 +170,10 @@
                                         <label class="span-form-input" for="password_confirmation">Confirmar
                                             contraseña</label>
                                         <input type="password"
-                                            class="form-control3 shadow-none @error('password_confirmation') is-invalid @enderror"
+                                            class="form-control3 shadow-none @error('password') is-invalid @enderror"
                                             id="password_confirmation" name="password_confirmation"
                                             value="{{ old('password_confirmation') }}" placeholder="p. ej. *******">
-                                        @error('password_confirmation')
+                                        @error('password')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -185,7 +193,8 @@
     </div>
     {{-- End Modal Nuevo Registro --}}
 
-{{-- Modal EDITAR --}}
+    {{-- Modal EDITAR --}}
+
     <script>
         function openEditarModal(userId) {
             // console.log(userId);
@@ -194,7 +203,7 @@
             $.ajax({
                 url: '/administradores/' + userId + '/edit', //Ruta de la peticion AJAX 
                 type: 'GET',
-                success: function(response){
+                success: function(response) {
                     $('#nameedit').val(response.name);
                     $('#emailedit').val(response.email);
                     $('#roledit').val(response.rol);
@@ -206,7 +215,7 @@
                     $('#EditarAdministradorModal').modal('show');
 
                 },
-                error: function(xhr, status, error){
+                error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             })
@@ -256,7 +265,8 @@
                                 <div class="col-12 py-2 px-4">
                                     <div class="box-divform ">
                                         <label class="span-form-input" for="roledit">Rol</label>
-                                        <select class="form-control3 shadow-none @error('roledit') is-invalid @enderror"
+                                        <select
+                                            class="form-control3 shadow-none @error('roledit') is-invalid @enderror"
                                             name="roledit" id="roledit">
                                             <option value="">- Seleccione un rol -</option>
                                             <option value="master"
@@ -271,14 +281,13 @@
                                         @enderror
                                     </div>
                                 </div>
-                    
+
                                 <div class="col-12 py-2 px-4">
                                     <div class="box-divform  px-2">
                                         <label class="span-form-input" for="passwordedit">Contraseña</label>
                                         <input type="password"
                                             class="form-control3 shadow-none @error('passwordedit') is-invalid @enderror"
-                                            id="passwordedit" name="passwordedit"                                            
-                                            placeholder="p. ej. *******">
+                                            id="passwordedit" name="passwordedit" placeholder="p. ej. *******">
                                         @error('passwordedit')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -290,7 +299,7 @@
                                             contraseña</label>
                                         <input type="password"
                                             class="form-control3 shadow-none @error('password_confirmationedit') is-invalid @enderror"
-                                            id="password_confirmationedit" name="password_confirmationedit"                                            
+                                            id="password_confirmationedit" name="password_confirmationedit"
                                             placeholder="p. ej. *******">
                                         @error('password_confirmationedit')
                                             <div class="invalid-feedback">{{ $message }}</div>

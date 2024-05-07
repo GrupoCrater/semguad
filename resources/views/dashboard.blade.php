@@ -5,20 +5,26 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="container">
                     <div class="row mt-5">
+                        @if (auth()->user()->rol == 'master')
+                            <div class="col-lg-3">
+                                <a class="individual container1" href="{{ route('administradores.index') }}">
+                                    <div class="iconContainer icon1">
+                                        <i class="fa-solid fa-graduation-cap"></i>
+                                    </div>
+                                    Usuarios 
+                                    <div class="numContainer numUsuairos ms-3 fs-5">{{$numUsuarios}}</div>
+                                    
+                                </a>
+                            </div>
+                        @endif
                         <div class="col-lg-3">
-                            <a class="individual container1" href="{{route('administradores.index')}}">
-                                <div class="iconContainer icon1">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                </div>
-                                Administradores
-                            </a>
-                        </div>
-                        <div class="col-lg-3">
-                            <a class="individual container2" href="{{route('boletos.index')}}">
+                            <a class="individual container2" href="{{ route('boletos.index') }}">
                                 <div class="iconContainer icon2">
                                     <i class="fa-solid fa-person-running"></i>
                                 </div>
                                 Boletos
+                                <div class="numContainer numBoletos ms-3 fs-5">{{$numBoletos}}</div>
+
                             </a>
                         </div>
                         <div class="col-lg-3">
@@ -76,7 +82,7 @@
                                         {{-- <td class="align-middle">{{ $boleto->estado }}</td> //este --}}
                                         <td class="align-middle text-center">{{ $boleto->club }}</td>
                                         {{-- <td class="align-middle">{{ $boleto->talla }}</td> --}}
-                                        <td class="align-middle text-center">{{ $boleto->prueba }}</td>                                        
+                                        <td class="align-middle text-center">{{ $boleto->prueba }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
