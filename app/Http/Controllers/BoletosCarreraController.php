@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Boletos;
+use App\Models\Fecha;
 use App\Http\Requests\BoletosRequest;
 use App\Events\PDFGenerated;
 use Illuminate\Support\Facades\Session;
@@ -16,9 +17,9 @@ class BoletosCarreraController extends Controller
 {
     public function index()
     {
-        // $boletos = Boletos::all();
         $boletos = Boletos::orderby('folio', 'desc')->get();
 
+        // GENERAR FOLIO
         //Paso 1. Generamos la fecha del folio
         $fechaFolio = date('dmy');
 
@@ -35,15 +36,40 @@ class BoletosCarreraController extends Controller
 
         //Paso 4: Creamos el nuevo folio
         $nuevoFolio = $fechaFolio . '-' . $nuevoNumero;
+        // END GENERAR FOLIO
 
-        return view('boletos.index', compact('boletos', 'nuevoFolio'));
+        // ASIGNACION DE PRECIO
+        // Obtenemos la fecha actual
+        $fechaActual = Carbon::now();
+
+        // Extraemos los valores de fechas y precios de la tabla fechas
+        $fechasYPrecios = Fecha::first();
+
+        if($fechasYPrecios){
+            if ($fechaActual < $fechasYPrecios->inicio_registro ){
+                $precio = "atesDeFecha";
+            }else if ($fechaActual > $fechasYPrecios->fin_registro){
+                $precio = "despuesDeFecha";
+            }else{
+                if ($fechaActual <= $fechasYPrecios->limite_pronto_pago) {
+                    $precio =$fechasYPrecios->costo_pronto_pago;
+                } else {
+                    $precio =$fechasYPrecios->costo_normal;
+                }
+            }            
+        }else{
+            $precio = "sinRegistro";
+        }
+        // END ASIGNACION DE PRECIO
+
+        return view('boletos.index', compact('boletos', 'nuevoFolio', 'precio'));
     }
 
 
     public function store(BoletosRequest $request)
     {
-        $userId= Auth::id(); //Guardamos el id de usuario en una variable
-        
+        $userId = Auth::id(); //Guardamos el id de usuario en una variable
+
         //Creamos un nuevo registro con los datos del formulario y el ID del usuario.
         $boleto = Boletos::create(array_merge($request->all(), ['id_user' => $userId]));
 
@@ -93,7 +119,7 @@ class BoletosCarreraController extends Controller
             event(new PDFGenerated($boleto, $precio));
 
             header('Location:' . asset('storage/pdfs/boleto_' . $folio . '.pdf'), true, 302);
-            exit;            
+            exit;
         }
     }
 
@@ -129,8 +155,9 @@ class BoletosCarreraController extends Controller
     }
 
 
-    public function create()
+    public function create() //NO ESTOY USANDO ESTA FUNCION YA QUE TENGO EL FORMULARIO EN UN MODAL, PASO LOS DATOS EN LA FUNCION INDEX
     {
+        // CREACION DE FOLIO
         //Paso 1. Generamos la fecha del folio
         $fechaFolio = date('dmy');
 
@@ -147,7 +174,22 @@ class BoletosCarreraController extends Controller
 
         //Paso 4: Creamos el nuevo folio
         $nuevoFolio = $fechaFolio . '-' . $nuevoNumero;
+        // END CREACION DE FOLIO
 
-        return view('boletos.create', compact('nuevoFolio'));
+        // ASIGNACION DE PRECIO
+        // Obtenemos la fecha actual
+        $fechaActual = Carbon::now();
+
+        // Estraemos los valores de fechas y precios de la tabla fechas
+        $fechasYPrecios = Fecha::first();
+
+        if ($fechaActual <= $fechasYPrecios->limite_pronto_pago) {
+            $precio = $fechasYPrecios->costo_pronto_pago;
+        } else {
+            $precio = $fechasYPrecios->costo_normal;
+        }
+        // END ASIGNACION DE PRECIO
+
+        return view('boletos.create', compact('nuevoFolio', 'precio'));
     }
 }

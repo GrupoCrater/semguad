@@ -26,6 +26,7 @@ class Boletos extends Model
         'club',
         'talla',
         'prueba',
+        'precio_boleto',
     ];
 
     public function user(){

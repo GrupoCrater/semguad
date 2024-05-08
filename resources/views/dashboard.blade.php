@@ -7,41 +7,43 @@
                     <div class="row mt-5">
                         @if (auth()->user()->rol == 'master')
                             <div class="col-lg-3">
-                                <a class="individual container1" href="{{ route('administradores.index') }}">
+                                <div class="individual container1">
                                     <div class="iconContainer icon1">
                                         <i class="fa-solid fa-graduation-cap"></i>
                                     </div>
                                     Usuarios 
-                                    <div class=" ms-3 fs-5">{{$numUsuarios}}</div>
-                                    
-                                </a>
+                                    <div class=" ms-3 fs-5">{{$numUsuarios}}</div>                                    
+                                </div>
                             </div>
                         @endif
                         <div class="col-lg-3">
-                            <a class="individual container2" href="{{ route('boletos.index') }}">
+                            <div class="individual container2">
                                 <div class="iconContainer icon2">
                                     <i class="fa-solid fa-person-running"></i>
                                 </div>
                                 Boletos
                                 <div class="ms-3 fs-5">{{$numBoletos}}</div>
 
-                            </a>
+                            </div>
                         </div>
                         <div class="col-lg-3">
-                            <a class="individual container3" href="#">
-                                <div class="iconContainer icon3">
+                            <div class="individual container3">
+                                <div class="iconContainer me-3 icon3"
+                                    >
                                     <i class="fa-solid fa-user"></i>
                                 </div>
-                                Opcion 3
-                            </a>
+                                Total
+                                <div class="ms-3 fs-5">$ {{$totalRecaudado}}</div>
+                            </div>
                         </div>
                         <div class="col-lg-3">
-                            <a class="individual container4">
-                                <div class="iconContainer icon4">
+                            <div class="individual container4">
+                                <div class="iconContainer me-2 icon4">                                
                                     <i class="fa-solid fa-people-roof"></i>
                                 </div>
-                                Opcion 4
-                            </a>
+                                Carrera
+                                <div class="ms-2 fs-6">{{$fechaLimite->fin_registro}}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="row my-5">

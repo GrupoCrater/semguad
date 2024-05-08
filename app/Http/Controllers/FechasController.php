@@ -11,8 +11,14 @@ class FechasController extends Controller
 
     public function index()
     {
+        $existeFecha = Fecha::first();
+
+        if($existeFecha){
+            $existeFecha = "fechasExistentes";
+        }
+
         $fechas = Fecha::all();
-        return view('fechas.index', compact('fechas'));
+        return view('fechas.index', compact('fechas', 'existeFecha'));
     }
 
     /**
@@ -27,7 +33,7 @@ class FechasController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
          //Perzonalizamos algunos mensajes
          $messages =[
             // 'password.confirmed' => 'Las contraseñas no coinciden.',
@@ -70,9 +76,9 @@ class FechasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        $fecha = Fecha::find($id);
+        $fecha = Fecha::find($request->fechaId);
 
         // Actualizamos los campos comunes
         $fecha->inicio_registro = $request->input('inicio_registroEdit');
@@ -80,6 +86,7 @@ class FechasController extends Controller
         $fecha->limite_pronto_pago = $request->input('limite_pronto_pagoEdit');
         $fecha->costo_pronto_pago = $request->input('costo_pronto_pagoEdit');
         $fecha->costo_normal = $request->input('costo_normalEdit');
+
 
         $fecha->update();
 

@@ -56,7 +56,7 @@ Route::group(['middleware' => MasterMiddleware::class], function () {
     Route::delete('/fechas/{id}', [FechasController::class, 'destroy'])->name('fechas.destroy');
     Route::get('/fechas/create', FechasController::class . '@create')->name('fechas.create');
     Route::post('/fechas', FechasController::class . '@store')->name('fechas.store');
-    Route::put('/fechas/{id}', FechasController::class . '@update')->name('fechas.update');
+    Route::put('/fechas/update', FechasController::class . '@update')->name('fechas.update');
 
 
 

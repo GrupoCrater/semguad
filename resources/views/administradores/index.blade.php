@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    {{-- Modal Nuevo Registro --}}
+{{-- Modal Nuevo Registro --}}
     @if ($errors->any())
         <script>
             $(document).ready(function() {
@@ -191,7 +191,7 @@
             </div>
         </div>
     </div>
-    {{-- End Modal Nuevo Registro --}}
+{{-- End Modal Nuevo Registro --}}
 
 {{-- Modal EDITAR --}}
     <script>

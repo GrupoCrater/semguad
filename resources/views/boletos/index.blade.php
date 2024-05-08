@@ -16,38 +16,32 @@
                                     <i class="fa-solid fa-arrow-left me-1"></i>
                                     Regresar
                                 </a>
+                                <h2 class="mb-0">Boletos registrados</h2>
                                 <div class="d-flex align-items-center">
-                                    <h2 class="mb-0">Boletos registrados</h2>
-                                    <a href="{{ route('fechas.index') }}"
-                                    class="btn btn-primary btn-sm me-1"
-                                    title="Ver fechas de registro y precios de boletos">
-                                    Ver fechas y precios
-                                </a>
+
+                                    <a href="{{ route('fechas.index') }}" class="btn btn-primary btn-sm me-1 fs-6"
+                                        title="Ver fechas de registro y precios de boletos">
+                                        Fechas y Precios
+                                    </a>
+                                    <a class="btn btn-sm btn-success fs-6"
+                                        onclick="alertasOModal()"
+                                         title="Crear nuevo registro">
+                                        <i class="fa-solid fa-plus"></i>
+                                        Nuevo
+                                    </a>
                                 </div>
-                                
-                                <a class="btn btn-sm btn-success fs-6" data-bs-toggle="modal"
-                                    data-bs-target="#nuevoRegistroModal" title="Crear nuevo registro">
-                                    <i class="fa-solid fa-plus"></i>
-                                    Nuevo
-                                </a>
+
+
                             </div>
                             <table id="tabla-boletos" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        {{-- <th scope="col">ID</th> --}}
                                         <th class="text-center" scope="col">Folio</th>
                                         <th class="text-center" scope="col">Nombre</th>
                                         <th class="text-center" scope="col">A. Paterno</th>
-                                        <th class="text-center" scope="col">A. Materno</th>
-                                        <th class="text-center" scope="col">Edad</th>
-                                        {{-- <th scope="col">Sexo</th> --}}
-                                        {{-- <th scope="col">Telefono</th> --}}
-                                        {{-- <th scope="col">Correo</th> --}}
                                         <th class="text-center" scope="col">Ciudad</th>
-                                        {{-- <th scope="col">Estado</th> --}}
-                                        <th class="text-center" scope="col">Club</th>
-                                        {{-- <th class="text-center" scope="col">Talla</th> --}}
                                         <th class="text-center" scope="col">Prueba</th>
+                                        <th class="text-center" scope="col">Precio</th>
                                         <th class="text-center" scope="col">Acciones</th>
                                     </tr>
                                 </thead>
@@ -55,20 +49,12 @@
                                     @foreach ($boletos as $boleto)
                                         <tr class="cursor-pointer"
                                             onclick="window.location='{{ route('boletos.edit', $boleto->id) }}'">
-                                            {{-- <td scope="row">{{ $boleto->id }}</td> //este --}}
                                             <th class="align-middle" scope="row">{{ $boleto->folio }}</th>
                                             <td class="align-middle">{{ $boleto->nombre }}</td>
                                             <td class="align-middle">{{ $boleto->apellido_paterno }}</td>
-                                            <td class="align-middle">{{ $boleto->apellido_materno }}</td>
-                                            <td class="align-middle text-center">{{ $boleto->edad }}</td>
-                                            {{-- <td class="align-middle">{{ $boleto->sexo }}</td> //este --}}
-                                            {{-- <td class="align-middle">{{ $boleto->telefono }}</td> //este --}}
-                                            {{-- <td class="align-middle">{{ $boleto->correo }}</td> //este --}}
                                             <td class="align-middle text-center">{{ $boleto->ciudad }}</td>
-                                            {{-- <td class="align-middle">{{ $boleto->estado }}</td> //este --}}
-                                            <td class="align-middle text-center">{{ $boleto->club }}</td>
-                                            {{-- <td class="align-middle">{{ $boleto->talla }}</td> --}}
                                             <td class="align-middle text-center">{{ $boleto->prueba }}</td>
+                                            <td class="align-middle text-center">$ {{ $boleto->precio_boleto }}</td>
                                             <td>
                                                 <div class="d-flex align-items-center justify-content-center"
                                                     style="height:100%">
@@ -108,6 +94,40 @@
     </div>
 
     {{-- Modal Nuevo Registro --}}
+    <script>
+        function alertasOModal(){
+            @if ($precio === "sinRegistro")
+            Swal.fire({
+                title: '¡Sin Fechas!',
+                text: 'No existen fechas y precios para la carrera, necesitas establecerlas antes de crear un boleto',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            
+            @elseif ($precio === "atesDeFecha")
+            Swal.fire({
+                title: '¡Fuera de Fecha!',
+                text: 'Las inscripciones aun no se abren, cambia la fecha de inicio o espera a que las inscripciones se abran',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+
+            @elseif ($precio === "despuesDeFecha")
+            Swal.fire({
+                title: '¡Fuera de Fechas!',
+                text: 'Las inscripciones se han cerrado, cambia la fecha de cierre o espera una siguiente convocatoria',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+
+            @else
+            $(document).ready(function() {
+                $('#nuevoRegistroModal').modal('show');
+            });
+            @endif
+        }
+    </script>
+
     @if ($errors->any())
         <script>
             $(document).ready(function() {
@@ -129,14 +149,27 @@
                         <form id="registroFormModal" action="{{ route('boletos.store') }}" method="post">
                             @csrf
                             <div class="row">
-                                <div class="p-2">
-                                    <div class="box-divform col-lg-3">
+                                <div class="col-lg-4 p-2">
+                                    <div class="box-divform px-2">
                                         <label class="span-form-input" for="folio">Folio del boleto</label>
                                         <input type="text"
                                             class="form-control3 shadow-none @error('folio') is-invalid @enderror"
                                             id="folio" name="folio" value="{{ $nuevoFolio }}" readonly>
-
                                         @error('folio')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 p-2">
+                                    <div class="box-divform px-2">
+                                        <label class="span-form-input" for="precio_boleto">Precio del boleto</label>
+                                        <input type="text"
+                                            class="form-control3 shadow-none @error('precio_boleto') is-invalid @enderror"
+                                            id="precio_boleto_dosplay" name="precio_boleto_display"
+                                            value="{{ $precio }}" readonly>
+                                        <input type="hidden" id="precio_boleto" name="precio_boleto"
+                                            value="{{ $precio }}">
+                                        @error('precio_boleto')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>

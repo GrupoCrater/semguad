@@ -23,6 +23,7 @@ class BoletosRequest extends FormRequest
     {
         return [            
             'folio' => 'required',
+            'folio' => 'required',
             'nombre' => ['required', 'regex:/^[a-zA-ZÀ-ÿ\s]+$/'],
             'apellido_paterno' => ['required', 'regex:/^[a-zA-ZÀ-ÿ\s]+$/'],
             'apellido_materno' => ['required', 'regex:/^[a-zA-ZÀ-ÿ\s]+$/'],
@@ -42,6 +43,7 @@ class BoletosRequest extends FormRequest
     {
         return[            
             'folio.required' => 'El campo folio es obligatorio',
+            'folio.required' => 'El campo precio es obligatorio',
             'nombre.required' => 'El campo nombre es obligatorio',
             'nombre.regex' => 'El campo nombre solo debe contener letras y espacios',
             'apellido_paterno.required' => 'El campo apellido paterno es obligatorio',

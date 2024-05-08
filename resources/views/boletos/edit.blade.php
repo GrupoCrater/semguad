@@ -18,14 +18,28 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
-                                    <div class="p-2">
-                                        <div class="box-divform col-lg-3">
+                                    <div class="p-2 col-lg-4">
+                                        <div class="box-divform px-2">
                                             <label class="span-form-input" for="folio">Folio del boleto</label>
                                             <input type="text"
                                                 class="form-control3 shadow-none @error('folio') is-invalid @enderror"
                                                 id="folio" name="folio" value="{{ $boleto->folio }}" readonly>
 
                                             @error('folio')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="p-2 col-lg-4">
+                                        <div class="box-divform px-2">
+                                            <label class="span-form-input" for="precio_boleto">Precio del boleto</label>
+                                            <input type="text"
+                                                class="form-control3 shadow-none @error('precio_boleto') is-invalid @enderror"
+                                                id="precio_boleto_display" name="precio_boleto" value="$ {{ $boleto->precio_boleto }}" readonly>
+
+                                            <input type="hidden" id="precio_boleto" name="precio_boleto" value="{{$boleto->precio_boleto}}">
+
+                                            @error('precio_boleto')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>

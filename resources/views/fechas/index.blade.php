@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <a href="{{ URL::previous() }}" class="btn btn-primary btn-sm fs-6"
+                                <a href="{{ route('boletos.index') }}" class="btn btn-primary btn-sm fs-6"
                                     title="Regresar al Panel">
                                     <i class="fa-solid fa-arrow-left me-1"></i>
                                     Regresar
@@ -16,8 +16,8 @@
                                     </a>
                                 </div>
 
-                                <a class="btn btn-sm btn-success fs-6" data-bs-toggle="modal"
-                                    data-bs-target="#nuevasFechasModal" title="Crear nuevas fechas de registro">
+                                <a class="btn btn-sm btn-success fs-6" onclick="alertasOModal()"
+                                    title="Crear nuevas fechas de registro">
                                     <i class="fa-solid fa-plus"></i>
                                     Nueva
                                 </a>
@@ -25,6 +25,7 @@
                             <table id="tabla-fechas" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th class="text-center" scope="col">Id</th>
                                         <th class="text-center" scope="col">Inicio Registro</th>
                                         <th class="text-center" scope="col">Fin Registro</th>
                                         <th class="text-center" scope="col">Fin Pronto Pago</th>
@@ -37,6 +38,8 @@
                                     @foreach ($fechas as $fecha)
                                         <tr class="cursor-pointer"
                                             onclick="window.location='{{ route('fechas.edit', $fecha->id) }}'">
+                                            <td class="align-middle">{{ $fecha->id }}</td>
+
                                             <td class="align-middle">{{ $fecha->inicio_registro }}</td>
                                             <td class="align-middle">{{ $fecha->fin_registro }}</td>
                                             <td class="align-middle">{{ $fecha->limite_pronto_pago }}</td>
@@ -77,15 +80,24 @@
         </div>
     </div>
 
-{{-- Modal Nuevo Registro --}}
-    @if ($errors->any())
-        <script>
-            $(document).ready(function() {
-                $('#nuevasFechasModal').modal('show');
-            });
-        </script>
-    @endif
+    {{-- Modal Nuevo Registro --}}
 
+    <script>
+        function alertasOModal() {
+            @if ($existeFecha === 'fechasExistentes')
+                Swal.fire({
+                    title: '¡Fechas existentes!',
+                    text: 'Ya existen fechas, elimina las acutales para poder crear nuevas',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            @else
+                $(document).ready(function() {
+                    $('#nuevasFechasModal').modal('show');
+                });
+            @endif
+        }
+    </script>
     <div class="modal fade" id="nuevasFechasModal" tabindex="-1" aria-labelledby="NuevasFechasModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -144,7 +156,7 @@
                                         <input type="number"
                                             class="form-control3 shadow-none @error('costo_pronto_pago') is-invalid @enderror"
                                             id="costo_pronto_pago" name="costo_pronto_pago"
-                                            value="{{ old('costo_pronto_pago') }}" placeholder="p. ej. $350">
+                                            value="{{ old('costo_pronto_pago') }}" placeholder="p. ej. 350">
                                         @error('costo_pronto_pago')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -157,7 +169,7 @@
                                         <input type="number"
                                             class="form-control3 shadow-none @error('costo_normal') is-invalid @enderror"
                                             id="costo_normal" name="costo_normal" value="{{ old('costo_normal') }}"
-                                            placeholder="p. ej. $400">
+                                            placeholder="p. ej. 400">
                                         @error('costo_normal')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -176,9 +188,9 @@
             </div>
         </div>
     </div>
-{{-- End Modal Nuevo Registro --}}
+    {{-- End Modal Nuevo Registro --}}
 
-{{-- Modal EDITAR --}}
+    {{-- Modal EDITAR --}}
     <script>
         function openEditarModal(fechaId) {
             // console.log(userId);
@@ -193,6 +205,7 @@
                     $('#limite_pronto_pagoEdit').val(response.limite_pronto_pago);
                     $('#costo_pronto_pagoEdit').val(response.costo_pronto_pago);
                     $('#costo_normalEdit').val(response.costo_normal);
+                    $('#fechaId').val(fechaId);
 
                     $('#EditarFechasModal').modal('show');
 
@@ -201,12 +214,11 @@
                     console.error(xhr.responseText);
                 }
             })
-
         }
     </script>
 
-    <div class="modal fade" id="EditarFechasModal" tabindex="-1"
-        aria-labelledby="EditarFechasModalLabel" aria-hidden="true">
+    <div class="modal fade" id="EditarFechasModal" tabindex="-1" aria-labelledby="EditarFechasModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -215,7 +227,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-lg-12">
-                        <form action="{{ route('fechas.update', ['id' => $fecha->id]) }}" method="post">
+                        <form action="{{ route('fechas.update') }}" method="post">
                             @csrf
                             @method('PUT')
                             <div class="row">
@@ -223,12 +235,12 @@
                                     <div class="box-divform">
                                         <label class="span-form-input" for="inicio_registroEdit">Fecha Inicio de
                                             Registros</label>
-                                            <input hidden id="userId" name="userId">
+                                        <input type="hidden" id="fechaId" name="fechaId" value="">
 
                                         <input type="date"
                                             class="form-control3 shadow-none @error('inicio_registroEdit') is-invalid @enderror"
                                             id="inicio_registroEdit" name="inicio_registroEdit"
-                                            value="{{ old('inicio_registroEdit', $fecha->inicio_registro) }}">
+                                            value="{{ old('inicio_registroEdit') }}">
                                         @error('inicio_registroEdit')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -241,7 +253,7 @@
                                         <input type="date"
                                             class="form-control3 shadow-none @error('fin_registroEdit') is-invalid @enderror"
                                             id="fin_registroEdit" name="fin_registroEdit"
-                                            value="{{ old('fin_registroEdit', $fecha->fin_registro) }}">
+                                            value="{{ old('fin_registroEdit') }}">
                                         @error('fin_registro')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -255,7 +267,7 @@
                                         <input type="date"
                                             class="form-control3 shadow-none @error('limite_pronto_pagoEdit') is-invalid @enderror"
                                             id="limite_pronto_pagoEdit" name="limite_pronto_pagoEdit"
-                                            value="{{ old('limite_pronto_pagoEdit', $fecha->limite_pronto_pago) }}">
+                                            value="{{ old('limite_pronto_pagoEdit') }}">
                                         @error('limite_pronto_pagoEdit')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -269,8 +281,7 @@
                                         <input type="number"
                                             class="form-control3 shadow-none @error('costo_pronto_pagoEdit') is-invalid @enderror"
                                             id="costo_pronto_pagoEdit" name="costo_pronto_pagoEdit"
-                                            value="{{ old('costo_pronto_pagoEdit', $fecha->costo_pronto_pago) }}"
-                                            placeholder="p. ej. $350">
+                                            value="{{ old('costo_pronto_pagoEdit') }}" placeholder="p. ej. $350">
                                         @error('costo_pronto_pagoEdit')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -283,8 +294,7 @@
                                         <input type="number"
                                             class="form-control3 shadow-none @error('costo_normalEdit') is-invalid @enderror"
                                             id="costo_normalEdit" name="costo_normalEdit"
-                                            value="{{ old('costo_normalEdit', $fecha->costo_normal) }}"
-                                            placeholder="p. ej. $400">
+                                            value="{{ old('costo_normalEdit') }}" placeholder="p. ej. $400">
                                         @error('costo_normalEdit')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -295,7 +305,6 @@
                                         <i class="fa-solid fa-floppy-disk me-1"></i>
                                         Guardar
                                     </button>
-                                    <input hidden id="userId" name="userId">
                                 </div>
                         </form>
                     </div>
@@ -303,7 +312,17 @@
             </div>
         </div>
     </div>
-{{-- End Modal EDITAR --}}
+    {{-- End Modal EDITAR --}}
+
+    {{-- Manejo de ERRORES --}}
+    @if ($errors->any())
+        <script>
+            $(document).ready(function() {
+                $('#nuevasFechasModal').modal('show');
+            });
+        </script>
+    @endif
+    {{-- End Manejo de ERRORES --}}
 
     {{-- ALERTAS --}}
     <script>
