@@ -74,11 +74,18 @@ class BoletosCarreraController extends Controller
         $boleto = Boletos::create(array_merge($request->all(), ['id_user' => $userId]));
 
         // START EVENTO para crear PDF
+        //Accedo a las fechas y precios registrados para la carrera
+        $fechasYPrecios = Fecha::first();
+        
         //Obener la fecha de registro del folio
         $fechaRegistro = Carbon::createFromFormat('dmy', substr($boleto->folio, 0, 6));
 
         //Determinar el precio
-        $precio = $fechaRegistro->isBefore('2024-04-01') ? '$350' : '$400';
+        if ($fechaRegistro <= $fechasYPrecios->limite_pronto_pago) {
+            $precio = $fechasYPrecios->costo_pronto_pago;
+        } else {
+            $precio = $fechasYPrecios->costo_normal;
+        }
 
         //Disparar evento una vez que se ha generado el PDF
         event(new PDFGenerated($boleto, $precio));

@@ -9,7 +9,7 @@
                             <div class="col-lg-3">
                                 <div class="individual container1">
                                     <div class="iconContainer icon1">
-                                        <i class="fa-solid fa-graduation-cap"></i>
+                                        <i class="fa-solid fa-users"></i>
                                     </div>
                                     Usuarios 
                                     <div class=" ms-3 fs-5">{{$numUsuarios}}</div>                                    
@@ -19,7 +19,7 @@
                         <div class="col-lg-3">
                             <div class="individual container2">
                                 <div class="iconContainer icon2">
-                                    <i class="fa-solid fa-person-running"></i>
+                                    <i class="fa-solid fa-person-running fs-2"></i>
                                 </div>
                                 Boletos
                                 <div class="ms-3 fs-5">{{$numBoletos}}</div>
@@ -28,9 +28,8 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="individual container3">
-                                <div class="iconContainer me-3 icon3"
-                                    >
-                                    <i class="fa-solid fa-user"></i>
+                                <div class="iconContainer me-3 icon3">
+                                    <i class="fa-solid fa-dollar-sign fs-3"></i>
                                 </div>
                                 Total
                                 <div class="ms-3 fs-5">$ {{$totalRecaudado}}</div>
@@ -39,7 +38,7 @@
                         <div class="col-lg-3">
                             <div class="individual container4">
                                 <div class="iconContainer me-2 icon4">                                
-                                    <i class="fa-solid fa-people-roof"></i>
+                                    <i class="fa-solid fa-calendar-day fs-3"></i>
                                 </div>
                                 Carrera
                                 <div class="ms-2 fs-6">{{$fechaLimite->fin_registro}}</div>
@@ -69,8 +68,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($boletos as $boleto)
-                                    <tr class="cursor-pointer"
-                                        onclick="window.location='{{ route('boletos.edit', $boleto->id) }}'">
+                                    <tr class="">
                                         {{-- <td scope="row">{{ $boleto->id }}</td> //este --}}
                                         <th class="align-middle" scope="row">{{ $boleto->folio }}</th>
                                         <td class="align-middle">{{ $boleto->nombre }}</td>

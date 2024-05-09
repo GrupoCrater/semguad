@@ -35,34 +35,34 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($fechas as $fecha)
+                                    @foreach ($fechasFormateadas as $fecha)
                                         <tr class="cursor-pointer"
-                                            onclick="window.location='{{ route('fechas.edit', $fecha->id) }}'">
-                                            <td class="align-middle">{{ $fecha->id }}</td>
+                                            onclick="openEditarModal('{{$fecha['id']}}')">
+                                            <td class="align-middle">{{ $fecha['id'] }}</td>
 
-                                            <td class="align-middle">{{ $fecha->inicio_registro }}</td>
-                                            <td class="align-middle">{{ $fecha->fin_registro }}</td>
-                                            <td class="align-middle">{{ $fecha->limite_pronto_pago }}</td>
-                                            <td class="align-middle text-center">{{ $fecha->costo_pronto_pago }}</td>
-                                            <td class="align-middle text-center">{{ $fecha->costo_normal }}</td>
+                                            <td class="align-middle text-center">{{ $fecha['inicio_registro'] }}</td>
+                                            <td class="align-middle text-center">{{ $fecha['fin_registro'] }}</td>
+                                            <td class="align-middle text-center">{{ $fecha['limite_pronto_pago'] }}</td>
+                                            <td class="align-middle text-center">{{ $fecha['costo_pronto_pago'] }}</td>
+                                            <td class="align-middle text-center">{{ $fecha['costo_normal'] }}</td>
                                             <td>
                                                 <div class="d-flex align-items-center justify-content-center"
                                                     style="height:100%">
                                                     <a href="#"
-                                                        onclick="event.stopPropagation(); openEditarModal('{{ $fecha->id }}')"
+                                                        onclick="event.stopPropagation(); openEditarModal('{{ $fecha['id']}}')"
                                                         class="btn btn-primary btn-sm me-1"
                                                         style="display:block; width:35px;" title="Ver">
                                                         <i class="fa-solid fa-pen-to-square"></i>
 
                                                     </a>
                                                     <form onclick="event.stopPropagation();"
-                                                        id="eliminar-{{ $fecha->id }}"
-                                                        action="{{ route('fechas.destroy', $fecha->id) }}"
+                                                        id="eliminar-{{ $fecha['id'] }}"
+                                                        action="{{ route('fechas.destroy', $fecha['id']) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-danger btn-sm"
-                                                            onclick="confirmarEliminacion('{{ $fecha->id }}')"
+                                                            onclick="confirmarEliminacion('{{ $fecha['id'] }}')"
                                                             style="width:35px;" title="Eliminar">
                                                             <i class="fa-solid fa-trash"></i>
                                                         </button>

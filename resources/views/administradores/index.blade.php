@@ -36,7 +36,7 @@
                                 <tbody>
                                     @foreach ($administradores as $administrador)
                                         <tr class="cursor-pointer"
-                                            onclick="window.location='{{ route('administradores.edit', $administrador->id) }}'">
+                                            onclick="openEditarModal('{{$administrador->id}}')">
                                             <th class="align-middle text-center" scope="row">{{ $administrador->id }}
                                             </th>
                                             <td class="align-middle text-center">{{ $administrador->name }}</th>

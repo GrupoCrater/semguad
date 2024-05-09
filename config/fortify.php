@@ -144,7 +144,7 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Features::registration(), //Comente esta linea para bloquear la ruta register de Jestream
         Features::resetPasswords(),
         // Features::emailVerification(),
         Features::updateProfileInformation(),

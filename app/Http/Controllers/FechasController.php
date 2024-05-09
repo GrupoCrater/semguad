@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Fecha;
+use Carbon\Carbon;
 
 class FechasController extends Controller
 {
@@ -18,7 +19,23 @@ class FechasController extends Controller
         }
 
         $fechas = Fecha::all();
-        return view('fechas.index', compact('fechas', 'existeFecha'));
+        // dd($fechas);
+        $fechasFormateadas = $fechas->map(function ($fecha){
+            $inicioRegistro = Carbon::parse($fecha->inicio_registro)->format('d-m-Y');
+            $finRegistro = Carbon::parse($fecha->fin_registro)->format('d-m-Y');
+            $limiteProntoPago = Carbon::parse($fecha->limite_pronto_pago)->format('d-m-Y');
+
+            return[
+                'id' => $fecha->id,
+                'inicio_registro' => $inicioRegistro,
+                'fin_registro' => $finRegistro,
+                'limite_pronto_pago' => $limiteProntoPago,
+                'costo_pronto_pago'=> $fecha->costo_pronto_pago,
+                'costo_normal' => $fecha->costo_normal
+            ];
+        });
+
+        return view('fechas.index', compact('fechasFormateadas', 'existeFecha'));
     }
 
     /**
@@ -34,6 +51,7 @@ class FechasController extends Controller
      */
     public function store(Request $request)
     {        
+
          //Perzonalizamos algunos mensajes
          $messages =[
             // 'password.confirmed' => 'Las contraseñas no coinciden.',

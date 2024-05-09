@@ -7,9 +7,10 @@ use App\Http\Controllers\FechasController;
 use App\Http\Controllers\SeminaristasController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Http\Controllers\AuthenticatedSessionController;
-use Laravel\Jetstream\Http\Controllers\RegisteredUserController;
+// use Laravel\Jetstream\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\CustomAuthenticatedSessionController;
 use App\Http\Middleware\MasterMiddleware;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 
 Route::middleware([
@@ -57,8 +58,8 @@ Route::group(['middleware' => MasterMiddleware::class], function () {
     Route::get('/fechas/create', FechasController::class . '@create')->name('fechas.create');
     Route::post('/fechas', FechasController::class . '@store')->name('fechas.store');
     Route::put('/fechas/update', FechasController::class . '@update')->name('fechas.update');
-
-
-
     // END RUTAS FECHAS
+
+    // Bloqueo de ruta /register
+    // Route::get('/register', [RegisteredUserController::class, 'create']);
 });
